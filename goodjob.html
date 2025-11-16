@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻中心 · 红金嘉奖盛典</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 配置Tailwind自定义主题（加入红金喜庆色系） -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            edit: '#165DFF',
+            photo: '#36B37E',
+            network: '#FF9F1C',
+            editvideo: '#6554C0',
+            festiveRed: '#8F1010',      // 更稳重的主红
+            festiveRedDark: '#5E0B0B',  // 深红
+            festiveGold: '#E6C87A',     // 香槟金
+            festiveGoldDeep: '#B8922E', // 深香槟金
+            festiveBlack: '#180C00',    // 暗底色
+            festivePaper: '#FFF9EF'     // 米白烫金纸感
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'bounce-slow': 'bounce 3s infinite',
+            'spin-slow': 'spin 8s linear infinite',
+            'fade-in': 'fadeIn 0.8s ease-in-out',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'sparkle': 'sparkle 2.4s linear infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(30px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            sparkle: {
+              '0%': { opacity: '0', transform: 'translateY(0) scale(0.5)' },
+              '40%': { opacity: '1', transform: 'translateY(-8px) scale(1)' },
+              '80%': { opacity: '.2', transform: 'translateY(-16px) scale(.6)' },
+              '100%': { opacity: '0', transform: 'translateY(-22px) scale(.4)' }
+            }
+          }
+        },
+      }
+    }
+  </script>
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0,0,0,0.25);
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      .animate-float-fast {
+        animation: float 4s ease-in-out infinite;
+      }
+      .bg-gradient-hero {
+        background:
+          radial-gradient(circle at 30% 35%, rgba(230,200,122,0.18), transparent 60%),
+          radial-gradient(circle at 70% 65%, rgba(230,200,122,0.12), transparent 65%),
+          linear-gradient(125deg, #4D0909 0%, #741010 55%, #5E0B0B 100%);
+      }
+      /* 更协调的深红绸缎背景：去除偏棕色，统一红调 */
+      .bg-festive-pattern {
+        background-image:
+          radial-gradient(circle at 30% 40%, rgba(255,216,92,0.10) 0%, rgba(255,216,92,0) 55%),
+          radial-gradient(circle at 70% 65%, rgba(255,216,92,0.08) 0%, rgba(255,216,92,0) 60%),
+          repeating-linear-gradient(45deg, rgba(255,216,92,0.07) 0 9px, rgba(255,216,92,0) 9px 18px),
+          linear-gradient(140deg,#4A0000 0%,#5E0000 35%,#7A0000 60%,#4A0000 100%);
+        background-attachment: fixed;
+      }
+      .lantern {
+        position: relative;
+        width: 70px; height: 90px; border-radius: 50%/55%;
+        background: linear-gradient(180deg,#C32727 0%,#8F1010 60%,#5E0B0B 100%);
+        box-shadow: 0 0 0 2px rgba(230,200,122,0.7), 0 8px 16px -6px rgba(0,0,0,0.45), inset 0 0 10px rgba(230,200,122,0.35);
+      }
+      .lantern::before { content:''; position:absolute; top:-14px; left:50%; transform:translateX(-50%); width:38px; height:14px; background:linear-gradient(180deg,#E6C87A,#B8922E); border-radius:4px; }
+      .lantern::after { content:''; position:absolute; bottom:-22px; left:50%; transform:translateX(-50%); width:8px; height:28px; background:linear-gradient(180deg,#E6C87A,#B8922E); border-radius:4px; }
+      .gold-divider { height:3px; background: linear-gradient(90deg,#E6C87A,#B8922E,#E6C87A); border-radius:2px; }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-14px) scale(1.025);
+        box-shadow: 0 28px 36px -12px rgba(0, 0, 0, 0.25), 0 18px 18px -6px rgba(0, 0, 0, 0.1);
+      }
+      .department-badge {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .glow-effect {
+        position: relative;
+        overflow: hidden;
+      }
+      .glow-effect::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(60deg, rgba(230,200,122,0) 0%, rgba(230,200,122,0.25) 50%, rgba(230,200,122,0) 100%);
+        transform: rotate(30deg);
+        animation: glow 3s infinite linear;
+      }
+      /* 英雄区质感噪点，消除塑料感 */
+      .texture-overlay { position:absolute; inset:0; pointer-events:none; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, rgba(0,0,0,0) 1px); background-size: 3px 3px; mix-blend-mode: overlay; opacity:.25; }
+      /* 部门淡金框架 */
+      .dept-frame {
+        position: relative;
+        border: 1px solid rgba(255,216,92,0.55);
+        border-radius: 30px;
+        padding: 3rem 2rem 2.5rem;
+        margin-bottom: 4rem;
+        background: linear-gradient(180deg,rgba(255,216,92,0.05),rgba(255,216,92,0.02));
+        box-shadow: inset 0 0 25px -8px rgba(255,216,92,0.6), 0 12px 32px -14px rgba(0,0,0,0.55);
+        overflow: hidden;
+      }
+      .dept-frame::before {
+        content: '';
+        position: absolute; inset:0; border-radius: inherit;
+        background: url("data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M120 260c40-70 140-90 180-60 50 40 130-10 170-70 30-40 70-60 90-40 25 25-10 55-46 92-60 62-134 118-202 142-84 30-180 28-220 4-50-32-52-74 28-120z' fill='rgba(255,216,92,0.08)'/%3E%3C/svg%3E") center/cover no-repeat;
+        opacity:.5;
+      }
+      /* 圆形头像卡片统一样式 */
+        .honor-card { position:relative; background: linear-gradient(165deg,#2A0A0A,#3D0F0F 55%,#2A0A0A); border-radius:26px; padding:2.4rem 1.2rem 1.4rem; box-shadow: 0 14px 30px -12px rgba(0,0,0,.65), 0 6px 12px -4px rgba(0,0,0,.4); transition: transform .35s ease, box-shadow .35s ease; }
+        /* 极淡丝纹/宣纸纹理叠层，去塑感 */
+        .honor-card::before { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:.14; mix-blend-mode:soft-light; background-image:
+          repeating-linear-gradient(125deg, rgba(230,200,122,0.06) 0 1px, rgba(230,200,122,0) 1px 10px),
+          repeating-linear-gradient(305deg, rgba(255,255,255,0.04) 0 1px, rgba(255,255,255,0) 1px 12px);
+        }
+      .honor-card:hover { transform: translateY(-12px); box-shadow: 0 24px 44px -16px rgba(0,0,0,.75), 0 10px 20px -6px rgba(0,0,0,.5); }
+      .honor-card::after { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; background:radial-gradient(circle at 50% 15%,rgba(255,216,92,0.18),rgba(255,216,92,0) 60%); }
+      .avatar-ring { position:relative; width:132px; height:132px; margin:0 auto 1rem; border-radius:50%; overflow:hidden; box-shadow:0 0 0 2px rgba(230,200,122,.6),0 10px 22px -8px rgba(0,0,0,.5), inset 0 0 14px rgba(230,200,122,.35); background:linear-gradient(140deg,#5E0B0B,#8F1010); }
+      .avatar-ring img { width:100%; height:100%; object-fit:cover; display:block; }
+      .trophy-badge { position:absolute; top:8px; right:10px; width:46px; height:46px; background: radial-gradient(circle at 35% 30%, #FFF9EF, #E6C87A 60%, #B8922E); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px -3px rgba(0,0,0,.5); animation: bounce 3.4s infinite; }
+      .award-label { display:inline-block; padding:4px 14px; font-size:.75rem; letter-spacing:.5px; background:linear-gradient(90deg,#E6C87A,#B8922E); color:#2A1A00; font-weight:600; border-radius:20px; box-shadow:0 4px 10px -4px rgba(0,0,0,.45); }
+      .honor-card .name { font-size:1.05rem; font-weight:700; color:#E6C87A; text-shadow:0 2px 6px rgba(0,0,0,.6); margin-bottom:.6rem; }
+      .honor-card button { background:linear-gradient(110deg,#E6C87A,#B8922E); color:#2A1A00; font-weight:600; padding:.55rem 1.1rem; border-radius:16px; font-size:.75rem; box-shadow:0 6px 14px -6px rgba(0,0,0,.5); transition: all .3s; }
+      .honor-card button:hover { transform:translateY(-3px); box-shadow:0 10px 20px -8px rgba(0,0,0,.7); }
+      .gold-outline { border:1px solid rgba(255,216,92,.65); }
+      .flake {
+        position: fixed; inset:0; width:12px; height:12px; pointer-events:none; z-index:120;
+        background: radial-gradient(circle at 30% 30%,#FFF9EF 0%,#FFD85C 60%,#C89B0E 100%);
+        clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+        opacity:0; animation: flakeFall 7s linear infinite;
+      }
+      /* 高级“流光星”效果（香槟金微辉+轻十字光） */
+      .twinkle-star {
+        position:absolute; border-radius:50%; pointer-events:none;
+        background: radial-gradient(circle at 40% 40%, rgba(255,249,239,.95) 0%, rgba(230,200,122,.85) 35%, rgba(230,200,122,.08) 65%, rgba(230,200,122,0) 75%);
+        box-shadow: 0 0 6px rgba(230,200,122,.45), 0 0 14px rgba(230,200,122,.22);
+        opacity:.85; will-change: transform, opacity;
+        animation: twinkle 3s ease-in-out infinite alternate;
+      }
+      .twinkle-star::before, .twinkle-star::after {
+        content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+        opacity:.7; filter: blur(.2px);
+      }
+      .twinkle-star::before { width:180%; height:1px; background: linear-gradient(90deg, transparent, rgba(230,200,122,.9), transparent); }
+      .twinkle-star::after { width:1px; height:180%; background: linear-gradient(180deg, transparent, rgba(230,200,122,.9), transparent); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes glow {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
+
+    @keyframes flakeFall {
+      0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity:0; }
+      6% { opacity:1; }
+      50% { transform: translateY(50vh) translateX(30px) rotate(240deg); }
+      100% { transform: translateY(110vh) translateX(-50px) rotate(640deg); opacity:0; }
+    }
+    @keyframes twinkle {
+      0% { transform: scale(.8); opacity:.55; }
+      50% { transform: scale(1); opacity:1; }
+      100% { transform: scale(.85); opacity:.6; }
+    }
+
+    /* 滚动动画触发类 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <!-- 引入Google字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-sans text-dark antialiased overflow-x-hidden bg-festive-pattern text-[15px]">
+  <!-- 顶部装饰条 -->
+  <div class="w-full h-2 bg-gradient-to-r from-edit via-photo to-network animate-pulse-slow"></div>
+
+  <!-- 英雄区域 -->
+  <header class="bg-gradient-hero text-white py-24 md:py-32 overflow-hidden relative shadow-2xl">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute top-10 left-10 w-32 h-32 rounded-full bg-white/10 blur-2xl animate-float"></div>
+      <div class="absolute bottom-10 right-10 w-48 h-48 rounded-full bg-editvideo/20 blur-3xl animate-float"
+        style="animation-delay: 1s;"></div>
+      <div class="absolute top-1/3 right-1/4 w-24 h-24 rounded-full bg-photo/15 blur-xl animate-float-fast"
+        style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- 粒子背景与质感覆盖 -->
+    <div id="particles-js" class="absolute inset-0 z-0"></div>
+    <div id="twinkle-layer" class="absolute inset-0 z-0 pointer-events-none"></div>
+    <div class="texture-overlay"></div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1
+          class="text-[clamp(2.6rem,6vw,4rem)] font-extrabold mb-6 leading-tight animate-fade-in tracking-wide drop-shadow-[0_6px_14px_rgba(0,0,0,0.35)]">
+          新闻中心 · 卓越嘉奖盛典
+        </h1>
+        <div class="gold-divider mx-auto mb-8 w-56 animate-slide-up" style="animation-delay:.15s"></div>
+        <p class="text-[clamp(1.05rem,2.2vw,1.3rem)] text-white/90 mb-10 font-light animate-slide-up max-w-3xl mx-auto"
+          style="animation-delay:.3s">
+          致敬燃烧激情与坚持的你们——每一次创意与奋进，皆化作今日耀眼的勋章。
+        </p>
+        <div class="flex items-center justify-center space-x-6 animate-slide-up" style="animation-delay:.45s">
+          <div class="lantern animate-float" aria-hidden="true"></div>
+          <button aria-label="查看嘉奖详情"
+            class="group relative inline-flex items-center justify-center px-8 py-4 rounded-full bg-gradient-to-r from-festiveGold to-festiveGoldDeep text-festiveBlack font-semibold tracking-wider shadow-[0_8px_18px_-6px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_26px_-4px_rgba(0,0,0,0.55)] transition-all duration-400 hover:-translate-y-1">
+            <span
+              class="absolute inset-0 rounded-full ring-2 ring-festiveGold/40 group-hover:ring-festiveGold/70"></span>
+            <i class="fa fa-trophy text-xl mr-3 text-festiveRedDark animate-pulse-slow"></i>
+            荣耀见证
+          </button>
+          <div class="lantern animate-float-fast" aria-hidden="true" style="animation-delay:1s"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 波浪分隔符 -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"
+        class="w-full h-16 md:h-20">
+        <path
+          d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+          opacity=".25" fill="#F8FAFC"></path>
+        <path
+          d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+          opacity=".5" fill="#F8FAFC"></path>
+        <path
+          d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+          fill="#F8FAFC"></path>
+      </svg>
+    </div>
+  </header>
+
+  <!-- 部门员工风采展示 -->
+  <section class="py-20 bg-festivePaper/40 backdrop-blur-sm">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 部门分类展示 -->
+      <div class="space-y-16">
+        <!-- 编辑部 -->
+        <div class="reveal dept-frame">
+          <div class="flex items-center justify-center mb-8">
+            <div class="w-10 h-10 bg-edit/10 rounded-full flex items-center justify-center mr-3 animate-pulse-slow">
+              <i class="fa fa-pencil-square-o text-xl text-edit"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-festiveRed drop-shadow">编辑部</h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+            <!-- 黄兴富 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-edit"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/01.png" alt="黄兴富 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">黄兴富</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3">
+                  <button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 摄影部 -->
+        <div class="reveal dept-frame">
+          <div class="flex items-center justify-center mb-8">
+            <div class="w-10 h-10 bg-photo/10 rounded-full flex items-center justify-center mr-3 animate-pulse-slow">
+              <i class="fa fa-camera text-xl text-photo"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-festiveRed drop-shadow">摄影部</h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+            <!-- 何佳乐 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-photo"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/02.png" alt="何佳乐 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">何佳乐</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+            <!-- 小胖 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-photo"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/03.png" alt="小胖 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">刘承晔</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+            <!-- 刘文全 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-photo"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/04.png" alt="刘文全 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">刘文全</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 网络部 -->
+        <div class="reveal dept-frame">
+          <div class="flex items-center justify-center mb-8">
+            <div class="w-10 h-10 bg-network/10 rounded-full flex items-center justify-center mr-3 animate-pulse-slow">
+              <i class="fa fa-wifi text-xl text-network"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-festiveRed drop-shadow">网络部</h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+            <!-- 宋俊森 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-network"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/05.png" alt="宋俊森 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">宋俊森</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+            <!-- 夏梦婷 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-network"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/06.png" alt="夏梦婷 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">夏梦婷</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+            <!-- 周帅 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-network"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/07.png" alt="周帅 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">周帅</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 剪辑部 -->
+        <div class="reveal dept-frame">
+          <div class="flex items-center justify-center mb-8">
+            <div
+              class="w-10 h-10 bg-editvideo/10 rounded-full flex items-center justify-center mr-3 animate-pulse-slow">
+              <i class="fa fa-film text-xl text-editvideo"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-festiveRed drop-shadow">剪辑部</h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+            <!-- 立交桥 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-editvideo"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/08.png" alt="李家琦 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">李家琦</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+            <!-- 张日轩 -->
+            <div class="honor-card gold-outline">
+              <div class="trophy-badge"><i class="fa fa-trophy text-editvideo"></i></div>
+              <div class="avatar-ring">
+                <img src="./img/09.png" alt="张日轩 QQ头像" />
+              </div>
+              <div class="text-center">
+                <div class="name">张日轩</div>
+                <span class="award-label mb-3">杰出贡献奖</span>
+                <div class="mt-3"><button type="button"><i class="fa fa-thumbs-up mr-1"></i> 表彰</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 底部荣誉栏 -->
+  <footer
+    class="relative overflow-hidden py-14 bg-gradient-to-b from-festiveBlack via-[#1f1103] to-[#140A00] text-white">
+    <div class="absolute inset-0 opacity-10">
+      <div
+        class="absolute top-0 left-0 w-full h-full bg-[url('https://picsum.photos/id/1048/1920/1080')] bg-cover bg-center">
+      </div>
+    </div>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center">
+        <h2 class="text-3xl font-extrabold mb-6 animate-fade-in tracking-wide">荣誉殿堂 · 致敬卓越</h2>
+        <p class="text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+          感谢每一位辛勤付出的同仁：因为你们的智慧、坚守与突破，新闻中心版图愈加辉煌。此刻光芒不止照亮过往，更昭示未来。
+        </p>
+        <div class="gold-divider mx-auto w-40 my-10 opacity-70"></div>
+        <div class="mt-12 pt-8 border-t border-white/10 text-gray-500 text-sm">
+          © 2025 新闻中心 版权所有 | 关山月
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 粒子效果和滚动动画脚本 -->
+  <script>
+    // 滚动动画触发
+    document.addEventListener('DOMContentLoaded', function () {
+      // 滚动动画
+      const reveals = document.querySelectorAll('.reveal');
+      function checkReveal() {
+        for (let i = 0; i < reveals.length; i++) {
+          const windowHeight = window.innerHeight;
+          const elementTop = reveals[i].getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add('active');
+          }
+        }
+      }
+
+      window.addEventListener('scroll', checkReveal);
+      checkReveal(); // 初始检查
+
+      // 金箔粒子效果
+      function createGoldFlake() {
+        const flake = document.createElement('div');
+        flake.className = 'flake';
+        const startLeft = Math.random() * 100; // vw
+        flake.style.left = startLeft + 'vw';
+        flake.style.animationDelay = (Math.random() * 4) + 's';
+        flake.style.animationDuration = (5 + Math.random() * 4) + 's';
+        flake.style.transform = 'scale(' + (0.6 + Math.random() * 0.8) + ')';
+        document.body.appendChild(flake);
+        setTimeout(() => flake.remove(), 9000);
+      }
+      for (let i = 0; i < 28; i++) createGoldFlake();
+      setInterval(createGoldFlake, 800);
+
+      // 高级流光星（静态闪烁，增强质感）
+      const twinkleLayer = document.getElementById('twinkle-layer');
+      function spawnTwinkles(n = 42) {
+        if (!twinkleLayer) return;
+        const hdr = document.querySelector('header');
+        const rect = hdr ? hdr.getBoundingClientRect() : null;
+        for (let i = 0; i < n; i++) {
+          const s = document.createElement('span');
+          s.className = 'twinkle-star';
+          const size = 1.6 + Math.random() * 2.6; // 1.6px - 4.2px
+          s.style.width = size + 'px';
+          s.style.height = size + 'px';
+          s.style.left = Math.random() * 100 + '%';
+          s.style.top = (10 + Math.random() * 70) + '%';
+          s.style.animationDuration = (2.2 + Math.random() * 3).toFixed(2) + 's';
+          s.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+          twinkleLayer.appendChild(s);
+        }
+      }
+      spawnTwinkles(46);
+
+      // 致敬按钮点击效果
+      const tributeButtons = document.querySelectorAll('button');
+      tributeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          this.innerHTML = '<i class="fa fa-check mr-1"></i> 已致敬';
+          this.classList.add('opacity-70');
+
+          // 创建点击效果
+          const clickEffect = document.createElement('div');
+          clickEffect.style.position = 'fixed';
+          clickEffect.style.zIndex = '1000';
+          clickEffect.style.width = '60px';
+          clickEffect.style.height = '60px';
+          clickEffect.style.borderRadius = '50%';
+          clickEffect.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+          clickEffect.style.transform = 'translate(-50%, -50%)';
+          clickEffect.style.pointerEvents = 'none';
+          clickEffect.style.animation = 'pulse 0.6s ease-out';
+
+          const rect = this.getBoundingClientRect();
+          clickEffect.style.left = rect.left + rect.width / 2 + 'px';
+          clickEffect.style.top = rect.top + rect.height / 2 + 'px';
+
+          document.body.appendChild(clickEffect);
+
+          setTimeout(() => {
+            document.body.removeChild(clickEffect);
+          }, 600);
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
